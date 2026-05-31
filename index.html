@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="パステルカラーでデザインされた、大人かわいいポモドーロタイマー。25分の作業と5分の休憩を交互に行い、セッション数を記録できます。">
+  <title>Flow Timer - 大人かわいい作業タイマー</title>
+  
+  <!-- Google Fonts: Quicksand & Outfit -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="theme-work">
+  <main class="app-container" id="app-main">
+    <header class="app-header">
+      <h1 id="app-title" class="app-title">Flow Timer</h1>
+      <p id="app-subtitle" class="app-subtitle">心地よいリズムで、わたしらしく進む時間</p>
+    </header>
+
+    <section class="timer-section" aria-label="タイマー表示領域">
+      <div class="timer-card">
+        <!-- 円形プログレスバー -->
+        <div class="progress-container">
+          <svg class="progress-ring" width="280" height="280" viewBox="0 0 280 280">
+            <circle class="progress-ring-bg" cx="140" cy="140" r="120" fill="none" stroke-width="10"></circle>
+            <circle id="progress-bar" class="progress-ring-fg" cx="140" cy="140" r="120" fill="none" stroke-width="10" stroke-linecap="round"></circle>
+          </svg>
+          
+          <!-- タイマー文字情報 -->
+          <div class="timer-display">
+            <span id="timer-status" class="timer-status">作業の時間</span>
+            <span id="timer-time" class="timer-time">25:00</span>
+          </div>
+        </div>
+
+        <!-- セッション表示 -->
+        <div class="sessions-container">
+          <span class="sessions-label">できたセッション:</span>
+          <div class="sessions-counter">
+            <span id="session-count" class="session-count">0</span>
+            <span class="session-unit">コ</span>
+          </div>
+          <div id="session-dots" class="session-dots" aria-hidden="true">
+            <!-- JavaScriptでドットを追加 -->
+          </div>
+        </div>
+
+        <!-- 操作ボタン -->
+        <div class="controls-container">
+          <button id="btn-toggle" class="btn btn-primary" aria-label="タイマーを開始する">
+            <!-- スタート・一時停止アイコン（SVG）はJSで切り替えるか初期値を配置 -->
+            <svg id="icon-play" class="btn-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M8 5.14v14l11-7-11-7z"/>
+            </svg>
+            <svg id="icon-pause" class="btn-icon hidden" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
+            </svg>
+            <span id="btn-toggle-text">スタート</span>
+          </button>
+          
+          <button id="btn-reset" class="btn btn-secondary" aria-label="タイマーをリセットする">
+            <svg class="btn-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/>
+            </svg>
+            <span>リセット</span>
+          </button>
+
+          <button id="btn-skip" class="btn btn-secondary" aria-label="現在のモードをスキップする">
+            <svg class="btn-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 4l10 8-10 8V4zM19 5v14"/>
+            </svg>
+            <span>スキップ</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 設定・カスタマイズ -->
+    <section class="settings-section" aria-label="タイマー設定">
+      <details class="settings-details">
+        <summary class="settings-summary">
+          <span>カスタム設定</span>
+          <svg class="summary-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
+        </summary>
+        
+        <div class="settings-content">
+          <div class="settings-group">
+            <label for="input-work">作業時間（分）</label>
+            <input type="number" id="input-work" min="1" max="60" value="25">
+          </div>
+          
+          <div class="settings-group">
+            <label for="input-break">休憩時間（分）</label>
+            <input type="number" id="input-break" min="1" max="60" value="5">
+          </div>
+
+          <div class="settings-actions">
+            <button id="btn-save-settings" class="btn btn-save">設定を適用</button>
+            <button id="btn-reset-sessions" class="btn btn-danger">セッション数をクリア</button>
+          </div>
+        </div>
+      </details>
+    </section>
+
+    <footer class="app-footer">
+      <p>&copy; 2026 Flow Timer. Designed for relaxation and productivity.</p>
+    </footer>
+  </main>
+
+  <!-- Script File -->
+  <script src="app.js"></script>
+</body>
+</html>
