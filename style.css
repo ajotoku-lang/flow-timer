@@ -37,7 +37,7 @@
 
 body {
   font-family: var(--font-main);
-  min-height: 100vh;
+  height: 100dvh;
   display: flex;
   justify-content: center;
   align-items: flex-start;
@@ -585,11 +585,17 @@ body.theme-break .btn-save:hover {
     gap: 1.2rem;
   }
   .progress-container {
-    width: 200px;
-    height: 200px;
+    width: 200px !important;
+    height: 200px !important;
   }
   .timer-time {
     font-size: 2.5rem;
+  }
+  .settings-section {
+    display: none !important;
+  }
+  .app-footer {
+    display: none !important;
   }
 }
 
@@ -611,8 +617,8 @@ body.theme-break .btn-save:hover {
     border-radius: 18px;
   }
   .progress-container {
-    width: 120px;
-    height: 120px;
+    width: 120px !important;
+    height: 120px !important;
   }
   .timer-status {
     font-size: 0.7rem;
@@ -671,8 +677,8 @@ body.theme-break .btn-save:hover {
     border-radius: 14px;
   }
   .progress-container {
-    width: 90px;
-    height: 90px;
+    width: 90px !important;
+    height: 90px !important;
   }
   .timer-status {
     font-size: 0.6rem;
