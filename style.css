@@ -369,6 +369,194 @@ body.theme-break .btn-secondary:hover {
   display: none !important;
 }
 
+/* お仕事完了ボタン */
+.btn-finish {
+  width: 100%;
+  padding: 0.95rem 1.5rem;
+  border-radius: 20px;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  background-color: rgba(255, 255, 255, 0.55);
+  border: 1.5px dashed rgba(0, 0, 0, 0.12);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.04);
+}
+
+body.theme-work .btn-finish {
+  color: var(--work-text);
+  border-color: var(--work-accent);
+}
+
+body.theme-break .btn-finish {
+  color: var(--break-text);
+  border-color: var(--break-accent);
+}
+
+body.theme-work .btn-finish:hover {
+  background-color: var(--work-accent);
+  color: #fff;
+  border-style: solid;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 22px rgba(232, 197, 200, 0.4);
+}
+
+body.theme-break .btn-finish:hover {
+  background-color: var(--break-accent);
+  color: #fff;
+  border-style: solid;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 22px rgba(188, 214, 212, 0.4);
+}
+
+.btn-finish:active {
+  transform: translateY(1px);
+}
+
+/* 完了モーダル */
+.finish-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1.5rem;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.finish-modal.is-open {
+  opacity: 1;
+}
+
+.finish-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(80, 70, 72, 0.28);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+.finish-dialog {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 380px;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--color-border);
+  border-radius: 28px;
+  padding: 2.4rem 2rem;
+  text-align: center;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.12);
+  transform: scale(0.92) translateY(10px);
+  transition: transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.finish-modal.is-open .finish-dialog {
+  transform: scale(1) translateY(0);
+}
+
+.finish-emoji {
+  font-size: 3.2rem;
+  line-height: 1;
+  margin-bottom: 0.8rem;
+  animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+  animation-delay: 0.15s;
+}
+
+.finish-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  line-height: 1.5;
+  margin-bottom: 0.6rem;
+}
+
+body.theme-work .finish-label {
+  color: var(--work-text-light);
+}
+
+body.theme-break .finish-label {
+  color: var(--break-text-light);
+}
+
+.finish-praise {
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  margin-bottom: 1.2rem;
+}
+
+body.theme-work .finish-praise {
+  color: var(--work-text);
+}
+
+body.theme-break .finish-praise {
+  color: var(--break-text);
+}
+
+.finish-stats {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.4rem;
+  padding: 0.6rem 1.2rem;
+  border-radius: 18px;
+  margin-bottom: 1.4rem;
+  background: rgba(255, 255, 255, 0.6);
+}
+
+body.theme-work .finish-stats {
+  border: 1px solid var(--work-accent);
+}
+
+body.theme-break .finish-stats {
+  border: 1px solid var(--break-accent);
+}
+
+.finish-count {
+  font-size: 2.2rem;
+  font-weight: 700;
+  font-family: 'Outfit', sans-serif;
+  line-height: 1;
+}
+
+body.theme-work .finish-count {
+  color: var(--work-accent-hover);
+}
+
+body.theme-break .finish-count {
+  color: var(--break-accent-hover);
+}
+
+.finish-count-unit {
+  font-size: 0.85rem;
+  font-weight: 600;
+  opacity: 0.85;
+}
+
+.finish-quote {
+  font-size: 0.95rem;
+  font-weight: 600;
+  line-height: 1.7;
+  letter-spacing: 0.02em;
+  margin-bottom: 1.6rem;
+  padding: 0 0.4rem;
+}
+
+body.theme-work .finish-quote {
+  color: var(--work-text);
+}
+
+body.theme-break .finish-quote {
+  color: var(--break-text);
+}
+
+.finish-close {
+  width: 100%;
+}
+
 /* Settings Styling (Accordion type) */
 .settings-section {
   width: 100%;

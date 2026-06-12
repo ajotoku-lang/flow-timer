@@ -76,8 +76,32 @@
             <span>スキップ</span>
           </button>
         </div>
+
+        <!-- お仕事完了ボタン -->
+        <button id="btn-finish" class="btn btn-finish" aria-label="1日の業務を終了して、できたセッションをふりかえる">
+          <svg class="btn-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 6L9 17l-5-5"/>
+          </svg>
+          <span>お仕事完了</span>
+        </button>
       </div>
     </section>
+
+    <!-- 完了モーダル（おつかれさま画面） -->
+    <div id="finish-modal" class="finish-modal hidden" role="dialog" aria-modal="true" aria-labelledby="finish-praise" aria-hidden="true">
+      <div class="finish-backdrop" id="finish-backdrop"></div>
+      <div class="finish-dialog" role="document">
+        <div class="finish-emoji" id="finish-emoji" aria-hidden="true">🌸</div>
+        <p class="finish-label">今日のおつかれさま</p>
+        <h2 id="finish-praise" class="finish-praise">よくがんばりました！</h2>
+        <div class="finish-stats">
+          <span id="finish-count" class="finish-count">0</span>
+          <span class="finish-count-unit">セッション達成</span>
+        </div>
+        <blockquote id="finish-quote" class="finish-quote">―</blockquote>
+        <button id="btn-finish-close" class="btn btn-primary finish-close">とじる</button>
+      </div>
+    </div>
 
     <!-- 設定・カスタマイズ -->
     <section class="settings-section" aria-label="タイマー設定">
