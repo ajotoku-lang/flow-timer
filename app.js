@@ -18,6 +18,16 @@ const btnSaveSettings = document.getElementById('btn-save-settings');
 const btnResetSessions = document.getElementById('btn-reset-sessions');
 const progressBar = document.getElementById('progress-bar');
 
+// Finish modal elements
+const btnFinish = document.getElementById('btn-finish');
+const finishModal = document.getElementById('finish-modal');
+const finishBackdrop = document.getElementById('finish-backdrop');
+const btnFinishClose = document.getElementById('btn-finish-close');
+const finishEmoji = document.getElementById('finish-emoji');
+const finishPraise = document.getElementById('finish-praise');
+const finishCount = document.getElementById('finish-count');
+const finishQuote = document.getElementById('finish-quote');
+
 // Timer State Variables
 let workDuration = 25 * 60;  // 25 minutes in seconds
 let breakDuration = 5 * 60;  // 5 minutes in seconds
@@ -50,6 +60,88 @@ function updateQuote() {
   timerSubtitle.textContent = quotes[randomIndex];
 }
 
+// ほめ言葉らしい格言（お仕事完了時に表示）
+const praiseQuotes = [
+  "よく頑張った自分を、いちばんに褒めてあげて。",
+  "小さな一歩の積み重ねが、遠くまで連れていってくれる。",
+  "今日のあなたは、昨日のあなたを少しだけ超えている。",
+  "丁寧に積み上げた時間は、決して裏切らない。",
+  "走り続けた人だけが、休む心地よさを知っている。",
+  "努力は、静かにあなたの味方をしている。",
+  "やり遂げた事実は、これからのあなたの自信になる。",
+  "今日まいた種は、いつか必ず花になる。",
+  "頑張れた日も、そうでない日も、進み続けたあなたは立派。",
+  "完璧じゃなくていい。続けたことに価値がある。",
+  "あなたの集中した時間は、未来からの贈り物。",
+  "ひと区切りつけられること、それも大切な才能。"
+];
+
+// セッション数に応じた褒めメッセージ
+function getPraise(count) {
+  if (count <= 0) {
+    return {
+      emoji: "🍵",
+      title: "おつかれさまでした",
+      message: "今日はゆっくり休む日。それも大事な選択です。"
+    };
+  } else if (count <= 2) {
+    return {
+      emoji: "🌱",
+      title: "よくスタートを切れました！",
+      message: `${count}セッション、しっかり集中できましたね。`
+    };
+  } else if (count <= 4) {
+    return {
+      emoji: "🌸",
+      title: "いいリズムでしたね！",
+      message: `${count}セッションも積み重ねるなんて、さすがです。`
+    };
+  } else if (count <= 7) {
+    return {
+      emoji: "✨",
+      title: "本当によく頑張りました！",
+      message: `${count}セッション完走、あなたの集中力は見事です。`
+    };
+  } else {
+    return {
+      emoji: "👑",
+      title: "今日のあなたは最高でした！",
+      message: `${count}セッションを達成！圧巻の一日でしたね。`
+    };
+  }
+}
+
+// お仕事完了モーダルを開く
+function openFinishModal() {
+  pauseTimer();
+
+  const praise = getPraise(sessions);
+  const quote = praiseQuotes[Math.floor(Math.random() * praiseQuotes.length)];
+
+  finishEmoji.textContent = praise.emoji;
+  finishPraise.textContent = praise.title;
+  finishCount.textContent = sessions;
+  finishQuote.textContent = `「${quote}」`;
+
+  // サブメッセージをラベルの下に反映
+  finishModal.querySelector('.finish-label').textContent = praise.message;
+
+  finishModal.classList.remove('hidden');
+  finishModal.setAttribute('aria-hidden', 'false');
+  // 次フレームでアニメーションクラスを付与
+  requestAnimationFrame(() => finishModal.classList.add('is-open'));
+
+  playFanfare();
+  btnFinishClose.focus();
+}
+
+// お仕事完了モーダルを閉じる
+function closeFinishModal() {
+  finishModal.classList.remove('is-open');
+  finishModal.setAttribute('aria-hidden', 'true');
+  setTimeout(() => finishModal.classList.add('hidden'), 300);
+}
+
 // Initial Setup
 document.addEventListener('DOMContentLoaded', () => {
   loadSettings();
@@ -71,6 +163,14 @@ btnReset.addEventListener('click', resetTimer);
 btnSkip.addEventListener('click', skipSession);
 btnSaveSettings.addEventListener('click', saveSettings);
 btnResetSessions.addEventListener('click', resetSessionsCount);
+btnFinish.addEventListener('click', openFinishModal);
+btnFinishClose.addEventListener('click', closeFinishModal);
+finishBackdrop.addEventListener('click', closeFinishModal);
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && !finishModal.classList.contains('hidden')) {
+    closeFinishModal();
+  }
+});
 
 // Load Settings from LocalStorage
 function loadSettings() {
@@ -229,7 +329,7 @@ function saveSettings() {
 
 // Reset session counter
 function resetSessionsCount() {
-  if (confirm('できたセッション数をリセットしてもよろしいですか？')) {
+  if (confirm('できた��ッション数をリセットしてもよろしいですか？')) {
     sessions = 0;
     localStorage.setItem('sessionsCount', sessions);
     sessionCountEl.textContent = sessions;
@@ -356,4 +456,31 @@ function playChime() {
   osc2.stop(now + 1.5);
   osc3.stop(now + 1.1);
   osc4.stop(now + 0.8);
+}
+
+// Celebratory ascending fanfare for "お仕事完了"
+function playFanfare() {
+  const AudioContext = window.AudioContext || window.webkitAudioContext;
+  if (!AudioContext) return;
+
+  const ctx = new AudioContext();
+  const now = ctx.currentTime;
+
+  // C major arpeggio: C5, E5, G5, C6
+  const notes = [523.25, 659.25, 783.99, 1046.5];
+
+  notes.forEach((freq, i) => {
+    const start = now + i * 0.12;
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.type = 'triangle';
+    osc.frequency.setValueAtTime(freq, start);
+    gain.gain.setValueAtTime(0.0001, start);
+    gain.gain.exponentialRampToValueAtTime(0.18, start + 0.04);
+    gain.gain.exponentialRampToValueAtTime(0.001, start + 0.9);
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    osc.start(start);
+    osc.stop(start + 1.0);
+  });
 }
